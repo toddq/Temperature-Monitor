@@ -1,0 +1,96 @@
+{% extends "bootstrap_responsive.html" %}
+{% import "bootstrap_wtf.html" as wtf %}
+
+{% block style %}
+{{super()}}
+  <link rel="stylesheet" href="{{ url_for('static', filename='temperature.css') }}">
+  <!-- TODO: consider caching these locally so not dependent on internet -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="{{ url_for("static", filename="lpoll.js") }}"></script>
+  <style>
+      #updated { background-color: yellow; width: 1.1in; float: right;
+                 margin-left: auto; margin-right: auto; }
+  </style>
+{%- endblock %}
+
+{% block body_content %}
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Temperature Logger</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="temp-container" class="hero-unit">
+        <div class="centered-content">
+          <h1 id="temperature"></h1>
+          <br/>
+          <div id="timestamp" class="muted small"></div>
+        </div>
+      </div>
+
+    <div>
+        <div id="clear" class="centered-content" style="display: none;">
+        	<button type="button" class="btn btn-primary" onClick="clearTarget()">Clear Target</button>
+        </div>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+    
+    <div class="accordion-group">
+    	<div class="accordion-heading">
+    		<a class="accordion-toggle" data-toggle="collapse" href="#historyGraph">History</a>
+    	</div>
+    	<div id="historyGraph" class="accordion-body collapse in">
+        <div class="accordion-inner">
+        <div id="history-data">
+        
+        </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" href="#targetForm">Target Temp</a>
+      </div>
+      <div id="targetForm" class="accordion-body collapse">
+        <div class="accordion-inner">
+      <div class="row">
+        <div class="span12">
+
+          <form id="target_form" class="form form-horizontal" method="post">
+            {{ form.hidden_tag() }}
+            {{ wtf.form_errors(form, False) }}
+
+            {{ wtf.horizontal_field(form.field1) }}
+            {{ wtf.horizontal_field(form.field2) }}
+
+            <div class="form-actions">
+               <button name="action_save" type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#targetForm">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      </div></div></div>
+
+      <hr>
+
+      <footer>
+      <p>&copy; Todd Quessenberry 2013 <i class="icon-beaker"></i></p>
+      </footer>
+
+    </div> <!-- /container -->
+{% endblock %}

@@ -1,0 +1,32 @@
+.centered-content{ text-align:center !important; }
+.small{ font-size:x-small; }
+
+#temperature{
+    font-size: 50px;
+}
+
+.accordion-heading{
+    background-color: #f5f5f5;	
+}
+
+.target_close_increasing{ 
+    color: white !important;
+    background-color: orange !important; 
+}
+.target_reached_increasing{ 
+    color: white !important; 
+    background-color: red !important;
+}
+
+.target_close_decreasing{ 
+    color: white !important;
+    background-color: deepskyblue !important; 
+}
+.target_reached_decreasing{ 
+    color: white !important; 
+    background-color: green !important;
+}
+
+#clear {
+	margin-bottom: 20px;	
+}
